@@ -44,3 +44,15 @@ export const columns: ColumnDef<ExchangeRate>[] = [
   createColumn('sifra_valute', 'Šifra valute', true, true),
   createColumn('valuta', 'Valuta', true, true),
 ];
+
+export const historyColumns: ColumnDef<ExchangeRate>[] = [
+  createColumn('drzava', 'Država', false, false),
+  createColumn('drzava_iso', 'Država ISO', false, false),
+  createColumn('kupovni_tecaj', 'Kupovni tečaj', false, false),
+  createColumn('prodajni_tecaj', 'Prodajni tečaj', false, false),
+  createColumn('srednji_tecaj', 'Srednji tečaj', false, false),
+  createColumn('sifra_valute', 'Šifra valute', false, false),
+  createColumn('valuta', 'Valuta', false, false),
+  createColumn('datum_primjene', 'Datum primjene', false, false),
+  createColumn('broj_tecajnice', 'Broj tečajnice', false, false),
+];

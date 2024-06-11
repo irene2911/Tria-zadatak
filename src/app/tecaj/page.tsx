@@ -34,7 +34,15 @@ export default async function Exchange({
           <p>{formatedDate}</p>
         </div>
       </div>
-      {error ? <p>{error}</p> : <DataTable columns={columns} data={data} />}
+      {error ? (
+        <p>{error}</p>
+      ) : (
+        <DataTable
+          columns={columns}
+          data={data}
+          historyStartDate={selectedDate}
+        />
+      )}
     </div>
   );
 }

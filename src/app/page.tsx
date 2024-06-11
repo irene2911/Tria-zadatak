@@ -17,7 +17,17 @@ export default function Home() {
           type='button'
           onClick={() => router.push(`/tecaj?date=${defaultDate}`)}
         >
-          Trentuna Tecajna lista
+          Trenutna Tečajna lista
+        </Button>
+        <Button
+          className='px-6'
+          variant='secondary'
+          type='button'
+          onClick={() =>
+            router.push(`/povijest/USD/${defaultDate}?range=7&select=true`)
+          }
+        >
+          Povijest Tečajnih lista
         </Button>
       </div>
     </main>
