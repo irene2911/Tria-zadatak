@@ -132,7 +132,7 @@ export const CalendarInputComponent: FC<{ paramDate: string }> = ({
           <p>Next</p>
         </Button>
       </div>
-      <p className='text-red-500 text-sm text-center mt-1'>{error ?? ''}</p>
+      <p className='text-red-500 h-1 text-sm text-center mt-1'>{error ?? ''}</p>
     </div>
   );
 };

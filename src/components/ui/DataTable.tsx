@@ -10,6 +10,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
   Table,
@@ -19,17 +20,23 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  isHistory?: boolean;
+  historyStartDate?: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  isHistory = false,
+  historyStartDate,
 }: DataTableProps<TData, TValue>) {
+  const router = useRouter();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [filtering, setFiltering] = useState('');
@@ -51,6 +58,19 @@ export function DataTable<TData, TValue>({
   });
 
   const hasGlobalFilter = columns.some((column) => column.enableGlobalFilter);
+
+  const getCellStyle = (currentValue: string, previousValue: string) => {
+    const curr = parseFloat(currentValue.replace(',', '.'));
+    const prev = parseFloat(previousValue.replace(',', '.'));
+
+    if (curr > prev) {
+      return { color: 'green' };
+    } else if (curr < prev) {
+      return { color: 'red' };
+    } else {
+      return {};
+    }
+  };
 
   return (
     <>
@@ -92,11 +112,48 @@ export function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => {
+                    const previousRow = table.getRowModel().rows[rowIndex + 1];
+                    const currentCellValue = cell.getValue() as string;
+                    const previousCellValue = previousRow
+                      ? (previousRow.getValue(cell.column.id) as string)
+                      : undefined;
+
                     return (
-                      <TableCell key={cell.id} className=''>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
+                      <TableCell
+                        key={cell.id}
+                        className=''
+                        style={
+                          isHistory &&
+                          previousCellValue &&
+                          (cell.column.id === 'kupovni_tecaj' ||
+                            cell.column.id === 'prodajni_tecaj' ||
+                            cell.column.id === 'srednji_tecaj')
+                            ? getCellStyle(currentCellValue, previousCellValue)
+                            : {}
+                        }
+                      >
+                        {historyStartDate && cell.column.id === 'valuta' ? (
+                          <Button
+                            variant='ghost'
+                            onClick={() => {
+                              router.push(
+                                `/povijest/${
+                                  row.id &&
+                                  (row.getValue(cell.column.id) as string)
+                                }/${historyStartDate}?range=7&select=false`
+                              );
+                            }}
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </Button>
+                        ) : (
+                          flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )
                         )}
                       </TableCell>
                     );
