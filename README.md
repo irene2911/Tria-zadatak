@@ -1,7 +1,6 @@
 # Tria zadatak
 
-This project is a modern web application built with Next.js, incorporating several carefully chosen libraries to enhance functionality and user experience. This README will guide you through setting up the project locally and provide explanations for the chosen libraries.
-
+This project is a modern web application built with Next.js, incorporating several carefully chosen libraries to enhance functionality and user experience. The application has been deployed to Vercel and can be accessed [here](https://tria-zadatak.vercel.app/). This README will guide you through setting up the project locally and provide explanations for the chosen libraries.
 Prerequisites:
 
 - Node.js (18.17 or later) or
@@ -21,7 +20,7 @@ yarn install
 bun install
 ```
 
-&nbsp;2. Start the production server:
+&nbsp;2. Start the development server:
 
 ```bash
 npm run dev
@@ -89,3 +88,9 @@ bun dev
 
 - Highly customizable and easy to use.
 - Provides a range of features out-of-the-box, including localization and accessibility support.
+
+## How to run tests:
+
+- Start development server
+- open new terminal
+- run bunx playwright test or npx playwright test

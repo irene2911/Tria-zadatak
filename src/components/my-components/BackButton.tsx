@@ -10,8 +10,11 @@ export const BackButton: FC<{ url: string; title: string }> = ({
   const router = useRouter();
   return (
     <div className='flex items-center gap-5'>
-      <Link href={url}>
-        <Button variant='outline'>{'<'} Back</Button>
+      <Link
+        href={url}
+        className='border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 inline-flex items-center justify-center rounded-md'
+      >
+        {'<'} Back
       </Link>
       <h1 className='uppercase'>{title}</h1>
     </div>
