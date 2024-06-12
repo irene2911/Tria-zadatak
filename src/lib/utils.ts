@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { format } from 'date-fns';
+import { compareDesc, format, parseISO } from 'date-fns';
 import { ExchangeRate } from './types';
 
 export function cn(...inputs: ClassValue[]) {
@@ -14,10 +14,8 @@ export const processExchangeRates = (
   if (!data) return;
   const filteredData = data.filter((rate) => rate.valuta === currency);
 
-  filteredData.sort(
-    (a, b) =>
-      new Date(b.datum_primjene).getTime() -
-      new Date(a.datum_primjene).getTime()
+  filteredData.sort((a, b) =>
+    compareDesc(parseISO(a.datum_primjene), parseISO(b.datum_primjene))
   );
 
   const uniqueData = filteredData.reduce((acc: ExchangeRate[], current) => {

@@ -6,13 +6,13 @@ interface DateInputProps {
   inputValue: string;
   handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleInputKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void;
-  handleOnBurl: () => void;
+  handleOnBlur: () => void;
 }
 export const DateInput: FC<DateInputProps> = ({
   handleInputChange,
   handleInputKeyDown,
   inputValue,
-  handleOnBurl,
+  handleOnBlur,
 }) => {
   return (
     <input
@@ -25,7 +25,7 @@ export const DateInput: FC<DateInputProps> = ({
       onKeyDown={handleInputKeyDown}
       onBlur={() => {
         if (inputValue === '') {
-          handleOnBurl();
+          handleOnBlur();
         }
       }}
     />

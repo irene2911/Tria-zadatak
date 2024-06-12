@@ -1,11 +1,11 @@
-import { useGetExchangeRatesHistory } from '@/app/api/useGetExchangeRatesHistory';
 import { ExchangeRateRes } from '@/lib/types';
-import { BackButton } from '@/components/ui/BackButton';
-import { DataTable } from '@/components/ui/DataTable';
-import { HistoryFiltersComponent } from '@/components/ui/HistoryFiltersComponent';
+import { BackButton } from '@/components/my-components/BackButton';
+import { DataTable } from '@/components/my-components/DataTable';
+import { HistoryFiltersComponent } from '@/components/my-components/HistoryFiltersComponent';
 import { historyColumns } from '@/components/ui/columns';
 import { formatDate, processExchangeRates } from '@/lib/utils';
 import { subDays } from 'date-fns';
+import { getExchangeRatesHistory } from '@/app/api/getExchangeRatesHistory';
 
 export default async function Exchange({
   params,
@@ -20,7 +20,7 @@ export default async function Exchange({
   const paramEndDate = params.date;
   const calculateEndDate = subDays(paramEndDate, paramRangeNumber);
   const paramStartDate = formatDate(calculateEndDate);
-  const { data, error }: ExchangeRateRes = await useGetExchangeRatesHistory(
+  const { data, error }: ExchangeRateRes = await getExchangeRatesHistory(
     paramStartDate,
     paramEndDate
   );
