@@ -11,8 +11,7 @@ export default function ErrorBoundary() {
           : Aw, Snap!
         </h1>
         <h3 className='xl:text-3xl text-2xl font-medium text-black '>
-          The page you&apos;re looking for is MIA. Check the URL or go back to
-          square one.
+          We can&apos;t find the page. Check the URL or head back home.
         </h3>
       </div>
     </div>

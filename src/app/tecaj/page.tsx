@@ -29,7 +29,7 @@ export default async function Exchange({
         </div>
         <div className='flex flex-row gap-2'>
           <p>Datum primjene:</p>
-          <p>{formatedDate}</p>
+          <p data-testid='datumPrimjene'>{formatedDate}</p>
         </div>
       </div>
       {error ? (

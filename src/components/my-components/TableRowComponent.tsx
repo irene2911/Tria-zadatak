@@ -54,16 +54,15 @@ export const TableRowComponent: React.FC<TableRowComponentProps<any, any>> = ({
           color = getCellStyle(currentCellValue, previousCellValue);
         }
         return (
-          <TableCell key={cell.id} className='' style={{ color }}>
+          <TableCell key={cell.id} style={{ color }}>
             {historyStartDate && cell.column.id === 'valuta' ? (
               <Link
+                className='hover:bg-slate-200 hover:text-accent-foreground px-2 py-2  rounded-md'
                 href={`/povijest/${
                   row.id && (row.getValue(cell.column.id) as string)
                 }/${historyStartDate}?range=7&select=false`}
               >
-                <Button variant='ghost'>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </Button>
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </Link>
             ) : (
               flexRender(cell.column.columnDef.cell, cell.getContext())

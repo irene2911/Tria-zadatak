@@ -21,9 +21,10 @@ export const DropdownCalendar: FC<{
           variant={'outline'}
           className={cn(
             'sm:w-[240px] w-full pl-3 text-left font-normal',
-            !endDate && 'text-muted-foreground',
-            !canChangeDate && 'pointer-events-none opacity-50'
+            !endDate && 'text-muted-foreground'
           )}
+          disabled={!canChangeDate}
+          data-testId='dropdown-calendar'
         >
           {endDate ? formatDate(endDate) : <span>Pick a date</span>}
         </Button>
