@@ -1,15 +1,18 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import { apiCutoff, today } from '@/lib/constants';
 import { formatDate } from '@/lib/utils';
-import { isLeapYear, isValid, isWithinInterval, parse } from 'date-fns';
+import {
+  addDays,
+  isLeapYear,
+  isValid,
+  isWithinInterval,
+  parse,
+  subDays,
+} from 'date-fns';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { FC, useState } from 'react';
-import { DateInput } from './DateInput';
+import { useState } from 'react';
 
-export const CalendarInputComponent: FC<{ paramDate: string }> = ({
-  paramDate,
-}) => {
+export const useCalendarInput = (paramDate: string) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -28,7 +31,7 @@ export const CalendarInputComponent: FC<{ paramDate: string }> = ({
     setInputValue(inputValue);
   };
 
-  const handleOnBurl = () => {
+  const handleOnBlur = () => {
     const lastDateSelected = formatDate(date).toString();
     setInputValue(lastDateSelected);
     setError(null);
@@ -77,17 +80,9 @@ export const CalendarInputComponent: FC<{ paramDate: string }> = ({
 
     let newDate;
     if (direction === 'prev') {
-      newDate = new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate() - 1
-      );
+      newDate = subDays(date, 1);
     } else {
-      newDate = new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate() + 1
-      );
+      newDate = addDays(date, 1);
     }
 
     const formattedNewDate = formatDate(newDate);
@@ -97,42 +92,16 @@ export const CalendarInputComponent: FC<{ paramDate: string }> = ({
     router.push(`${pathname}?${params.toString()}`);
   };
 
-  return (
-    <div className='w-full flex flex-col items-center sm:items-start mt-10'>
-      <div className='gap-5 flex flex-row items-center'>
-        <Button
-          asChild
-          size='sm'
-          onClick={() => {
-            handleButtonDateChange('prev');
-            if (error) setError(null);
-          }}
-          variant={'outline'}
-          className={`${isApiCutoff && 'pointer-events-none opacity-50'}`}
-        >
-          <p>Prev</p>
-        </Button>
-        <DateInput
-          inputValue={inputValue}
-          handleInputChange={handleInputChange}
-          handleInputKeyDown={handleInputKeyDown}
-          handleOnBurl={handleOnBurl}
-        />
-        <Button
-          asChild
-          size='sm'
-          onClick={() => {
-            if (isToday) return;
-            handleButtonDateChange('next');
-            if (error) setError(null);
-          }}
-          variant={'outline'}
-          className={`${isToday && 'pointer-events-none opacity-50'}`}
-        >
-          <p>Next</p>
-        </Button>
-      </div>
-      <p className='text-red-500 h-1 text-sm text-center mt-1'>{error ?? ''}</p>
-    </div>
-  );
+  return {
+    date,
+    inputValue,
+    error,
+    isToday,
+    isApiCutoff,
+    setError,
+    handleInputChange,
+    handleOnBlur,
+    handleInputKeyDown,
+    handleButtonDateChange,
+  };
 };
